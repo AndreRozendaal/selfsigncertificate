@@ -1,5 +1,13 @@
+$VerbosePreference = "Continue"
+$DebugPreference = "Continue"
 
-$hostn=(Get-AzureRmPublicIpAddress -ResourceGroupName $(we.ResourceGroupName) -Name "pip-$(ApplicationGateway)").DnsSettings.Fqdn
+Param(
+    [parameter(Mandatory=$true)][String]$resourceGroupName,
+    [parameter(Mandatory=$true)][String]$ApplicationGateway,
+    [parameter(Mandatory=$true)][String]$Password,
+)
+
+$hostn=(Get-AzureRmPublicIpAddress -ResourceGroupName $(ResourceGroupName) -Name "pip-$(ApplicationGateway)").DnsSettings.Fqdn
 write-host "##vso[task.setvariable variable=host]$hostn"
 $cert=New-SelfSignedCertificate -DnsName $hostn -CertStoreLocation "cert:\CurrentUser\My"
 $pwd = ConvertTo-SecureString -String $(Password) -Force -AsPlainText
