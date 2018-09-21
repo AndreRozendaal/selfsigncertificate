@@ -1,12 +1,10 @@
 $VerbosePreference = "Continue"
 $DebugPreference = "Continue"
 
-Param(
-    [parameter(Mandatory=$true)][String]$ResourceGroupName,
-    [parameter(Mandatory=$true)][String]$ApplicationGateway,
-    [parameter(Mandatory=$true)][String]$Password,
-    [parameter(Mandatory=$true)][String]$WorkingDirectory
-)
+$ResourceGroupName = $args[0]
+$ApplicationGateway = $args[1]
+$Password = $args[2]
+$WorkingDirectory = $args[3]
 
 $hostn=(Get-AzureRmPublicIpAddress -ResourceGroupName $ResourceGroupName -Name "pip-$ApplicationGateway").DnsSettings.Fqdn
 write-host "##vso[task.setvariable variable=host]$hostn"
