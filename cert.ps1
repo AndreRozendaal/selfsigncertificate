@@ -9,13 +9,13 @@ $WorkingDirectory = $args[3]
 $hostn=(Get-AzureRmPublicIpAddress -ResourceGroupName $ResourceGroupName -Name "pip-$ApplicationGateway").DnsSettings.Fqdn
 write-host "##vso[task.setvariable variable=host]$hostn"
 
-write-host "Start New-SelfSignedCertificate"
+write-verbose "Start New-SelfSignedCertificate"
 $cert=New-SelfSignedCertificate -DnsName $hostn -CertStoreLocation "cert:\CurrentUser\My"
-write-host "End New-SelfSignedCertificate"
+write-verbose "End New-SelfSignedCertificate"
 
-write-host "Password: $Password : $pwd"
+write-verbose "Password: $Password : $pwd"
 $pwd = ConvertTo-SecureString -String $Password -Force -AsPlainText
 
-write-host "Start Export-PfxCertificate"
+write-verbose "Start Export-PfxCertificate"
 Export-PfxCertificate -cert "cert:\CurrentUser\My\$cert.thumbprint" -FilePath "$WorkingDirectory\appgwcert.pfx" -Password $pwd -Force
-write-host "End Export-PfxCertificate"
+write-verbose "End Export-PfxCertificate"
