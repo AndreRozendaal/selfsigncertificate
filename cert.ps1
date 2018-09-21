@@ -19,8 +19,8 @@ $pwd = ConvertTo-SecureString -String $Password -Force -AsPlainText
 write-verbose "dir cert cert:\CurrentUser\My"
 dir cert:\CurrentUser\My
 
-write-verbose "Thumbprint $cert.thumbprint"
+write-verbose "Thumbprint ($cert.Thumbprint)"
 
 write-verbose "Start Export-PfxCertificate"
-Export-PfxCertificate -cert "cert:\CurrentUser\My\$cert.thumbprint" -FilePath "$WorkingDirectory\appgwcert.pfx" -Password $pwd -Force
+Export-PfxCertificate -cert "cert:\CurrentUser\My\($cert.ThumbPrint)" -FilePath "$WorkingDirectory\appgwcert.pfx" -Password $pwd -Force
 write-verbose "End Export-PfxCertificate"
